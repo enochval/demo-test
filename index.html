@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+</head>
+
+<body>
+  <div id="app">
+    <section class="section">
+      <div class="container">
+      <div class="buttons">
+        <span class="button is-primary is-large" :class="{'is-loading': loading}" @click="fetchAPI">Click me to fetch API</span>
+      </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        loading: false,
+        baseURL: 'https://pelipost.com/service/appbanners'
+      },
+      methods: {
+        async fetchAPI() {
+          this.loading = !this.loading
+          const response = await fetch(`${this.baseURL}?banner_type=home`)
+          const data = await response.json()
+          console.log(data)
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
