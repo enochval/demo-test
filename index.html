@@ -30,7 +30,7 @@
       methods: {
         async fetchAPI() {
           this.loading = !this.loading
-          const response = await fetch(`${this.baseURL}?banner_type=home`)
+          const response = await fetch(`${this.baseURL}?banner_type=home`, {method: "POST"})
           const data = await response.json()
           console.log(data)
         }
