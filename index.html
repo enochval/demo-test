@@ -11,9 +11,12 @@
   <div id="app">
     <section class="section">
       <div class="container">
-      <div class="buttons">
-        <span class="button is-primary is-large" :class="{'is-loading': loading}" @click="fetchAPI">Click me to fetch API</span>
-      </div>
+        <div class="buttons">
+          <span class="button is-primary is-large" :class="{'is-loading': loading}" @click="fetchAPI">Click me to fetch API</span>
+        </div>
+        <pre v-if="items">
+          {{items}}
+        </pre>
       </div>
     </section>
   </div>
@@ -25,14 +28,20 @@
       el: '#app',
       data: {
         loading: false,
-        baseURL: 'https://pelipost.com/service/appbanners'
+        baseURL: 'https://pelipost.com/service/appbanners',
+        CORSProxy: 'https://cors-anywhere.herokuapp.com/',
+        items: false
       },
       methods: {
         async fetchAPI() {
           this.loading = !this.loading
-          const response = await fetch(`${this.baseURL}?banner_type=home`, {method: "POST"})
-          const data = await response.json()
-          console.log(data)
+          this.items = false
+          const response = await fetch(`${this.CORSProxy}${this.baseURL}?banner_type=home`, {
+            method: "POST"
+          })
+          const { data } = await response.json()
+          this.items = data
+          this.loading = !this.loading
         }
       }
     })
