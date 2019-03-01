@@ -36,12 +36,18 @@
         async fetchAPI() {
           this.loading = !this.loading
           this.items = false
-          const response = await fetch(`${this.CORSProxy}${this.baseURL}?banner_type=home`, {
-            method: "POST"
-          })
-          const { data } = await response.json()
-          this.items = data
-          this.loading = !this.loading
+          try {
+            const response = await fetch(`${this.CORSProxy}${this.baseURL}?banner_type=home`, {
+              method: "POST"
+            })
+            const { data } = await response.json()
+            this.items = data
+          } catch (e) {
+            console.log(e.response)
+            alert('Please reload and try again!')
+          } finally {
+            this.loading = !this.loading
+          }
         }
       }
     })
